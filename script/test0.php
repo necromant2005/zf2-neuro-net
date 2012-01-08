@@ -1,8 +1,9 @@
 <?php
 function __autoload($name)
 {
-    var_dump($name);
-    die();
+    $path = __DIR__ . '/../library/' . str_replace('\\', '/', $name) . '.php';
+    if (!file_exists($path)) throw new DomainException('Class "' . $name . '" not found');
+    include_once($path);
 }
 
 $network = new Neuro\Network\Network;
@@ -31,6 +32,7 @@ $network->addLayer($layer);
 $layer = new Neuro\Network\Layer;
 $layer->addNode($output0);
 $layer->addNode($output1);
+$network->addLayer($layer);
 
 // USAGE
 
